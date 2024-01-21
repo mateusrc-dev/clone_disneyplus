@@ -1,6 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
     const buttons = document.querySelectorAll('[data-tab-button]'); // let's select through the attribute
     const questions = document.querySelectorAll('[data-faq-question]');
+    const heroSection = document.querySelector('.hero');
+    
+    const heightOfElementHero = heroSection.clientHeight; // let's get the height of element hero with property 'clientHeight'
+
+    window.addEventListener('scroll', function() { // this function always will be called when change the scroll of window
+        const currentPosition = window.scrollY; // let's get position of scroll in window
+
+        if (currentPosition > heightOfElementHero) {
+            hiddenElementsOfHeader();
+        } else {
+            showElementsOfHeader();
+        }
+    });
     
     for (let i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener('click', function(button) {
@@ -19,6 +32,16 @@ document.addEventListener('DOMContentLoaded', function() {
         questions[i].addEventListener('click', openOrCloseAnswer);
     }
 });
+
+function hiddenElementsOfHeader() {
+    const header = document.querySelector('.header');
+    header.classList.add('header--is-hidden');
+}
+
+function showElementsOfHeader() {
+    const header = document.querySelector('.header');
+    header.classList.remove('header--is-hidden');
+}
 
 function openOrCloseAnswer(event) { // this event is send implicitly in before function
     const classThatLetsUse = 'faq__questions__item--is-open';
